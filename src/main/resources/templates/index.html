@@ -3,137 +3,446 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .login-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 50px 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 420px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 40px;
-            font-size: 2.5em;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .form-group {
-            margin-bottom: 30px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: #34495e;
-            font-size: 1.1em;
-        }
-        
-        input[type="text"], 
-        input[type="password"] {
-            width: 100%;
-            padding: 18px 20px;
-            border: 2px solid #e8ecf0;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background-color: #f8f9fa;
-        }
-        
-        input[type="text"]:focus, 
-        input[type="password"]:focus {
-            outline: none;
-            border-color: #667eea;
-            background-color: #fff;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-            transform: translateY(-2px);
-        }
-        
-        .login-btn {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 30px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .login-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-        
-        .login-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-        }
-        
-        .login-btn:hover::before {
-            left: 100%;
-        }
-        
-        .login-btn:active {
-            transform: translateY(-1px);
-        }
-    </style>
+    <title>내 블로그 - 개발과 일상 이야기</title>
+    <meta name="description" content="개발, 일상, 그리고 다양한 주제에 대한 이야기를 공유하는 블로그입니다.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="/styles/index.css" rel="stylesheet">
 </head>
 <body>
-    <div class="login-container">
-        <h1>로그인</h1>
-        
-        <form action="calculator.html" method="get">
-            <div class="form-group">
-                <label for="username">아이디</label>
-                <input type="text" id="username" name="username" placeholder="아이디를 입력하세요" required>
+    <!-- 네비게이션 바 -->
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-blog"></i> BLOG
+            </a>
+            <div class="navbar-nav">
+                <a class="nav-link active" href="#home">홈</a>
+                <a class="nav-link" href="#about">소개</a>
+                <a class="nav-link" href="#posts">포스트</a>
+                <a class="nav-link" href="#contact">연락처</a>
+                <a class="btn btn-outline-secondary" href="/login">
+                    <i class="fas fa-sign-in-alt"></i> 로그인
+                </a>
+                <a class="btn btn-primary" href="/signup">
+                    <i class="fas fa-user-plus"></i> 회원가입
+                </a>
             </div>
-            
-            <div class="form-group">
-                <label for="password">비밀번호</label>
-                <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+        </div>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section id="home" class="hero-section">
+        <div class="hero-background">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+        <div class="container">
+            <div class="hero-badge">
+                <i class="fas fa-sparkles"></i>
+                <span>새로운 포스트가 매주 업데이트됩니다</span>
             </div>
-            
-            <button type="submit" class="login-btn">로그인</button>
-        </form>
+            <h1 class="hero-title">
+                안녕하세요,<br>
+                <span class="gradient-text">블로그</span>에 오신 것을<br>
+                환영합니다!
+            </h1>
+            <p class="hero-description">개발, 일상, 그리고 다양한 주제에 대한 이야기를 공유하는 공간입니다.<br>지식과 경험을 나누며 함께 성장해요.</p>
+            <div class="hero-buttons">
+                <a href="#posts" class="btn btn-primary btn-large">
+                    <i class="fas fa-rocket"></i> 포스트 둘러보기
+                </a>
+                <a href="#about" class="btn btn-outline btn-large">
+                    <i class="fas fa-user-circle"></i> 소개 보기
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">127</div>
+                    <div class="stat-label">포스트</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2.4K</div>
+                    <div class="stat-label">방문자</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">856</div>
+                    <div class="stat-label">댓글</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 메인 컨텐츠 -->
+    <div class="container">
+        <div class="row">
+            <!-- 포스트 목록 -->
+            <div class="col-lg-8">
+                <section id="posts">
+                    <div class="section-header">
+                        <div>
+                            <h2><i class="fas fa-fire"></i> 인기 포스트</h2>
+                            <p class="section-subtitle">가장 많이 읽힌 글들을 만나보세요</p>
+                        </div>
+                        <div class="filter-buttons">
+                            <button class="filter-btn active">전체</button>
+                            <button class="filter-btn">개발</button>
+                            <button class="filter-btn">일상</button>
+                            <button class="filter-btn">여행</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 포스트 카드들 -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <article class="blog-card">
+                                <div class="card-image">
+                                    <div class="card-image-placeholder" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                    <div class="card-badge trending">
+                                        <i class="fas fa-fire"></i> 인기
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="post-meta">
+                                        <span><i class="fas fa-calendar-alt"></i> 2024-01-15</span>
+                                        <span><i class="fas fa-eye"></i> 1,520</span>
+                                        <span><i class="fas fa-heart"></i> 89</span>
+                                    </div>
+                                    <h3 class="card-title">Spring Boot로 REST API 만들기</h3>
+                                    <p class="card-text">Spring Boot를 사용하여 RESTful API를 만드는 방법과 Best Practice에 대해 자세히 알아보겠습니다.</p>
+                                    <div class="badges">
+                                        <span class="badge badge-primary">Spring Boot</span>
+                                        <span class="badge badge-secondary">REST API</span>
+                                        <span class="badge badge-accent">Java</span>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="author-info">
+                                            <div class="author-avatar">
+                                                <i class="fas fa-user-circle"></i>
+                                            </div>
+                                            <span class="author-name">관리자</span>
+                                        </div>
+                                        <a href="#" class="btn btn-text">
+                                            읽어보기 <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <article class="blog-card">
+                                <div class="card-image">
+                                    <div class="card-image-placeholder" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                        <i class="fas fa-utensils"></i>
+                                    </div>
+                                    <div class="card-badge new">
+                                        <i class="fas fa-star"></i> 신규
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="post-meta">
+                                        <span><i class="fas fa-calendar-alt"></i> 2024-01-12</span>
+                                        <span><i class="fas fa-eye"></i> 892</span>
+                                        <span><i class="fas fa-heart"></i> 45</span>
+                                    </div>
+                                    <h3 class="card-title">서울 맛집 투어 후기</h3>
+                                    <p class="card-text">서울의 숨은 맛집들을 찾아다니며 느낀 점들을 솔직하게 공유합니다.</p>
+                                    <div class="badges">
+                                        <span class="badge badge-warning">맛집</span>
+                                        <span class="badge badge-secondary">서울</span>
+                                        <span class="badge badge-accent">여행</span>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="author-info">
+                                            <div class="author-avatar">
+                                                <i class="fas fa-user-circle"></i>
+                                            </div>
+                                            <span class="author-name">관리자</span>
+                                        </div>
+                                        <a href="#" class="btn btn-text">
+                                            읽어보기 <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <article class="blog-card">
+                                <div class="card-image">
+                                    <div class="card-image-placeholder" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                        <i class="fab fa-js"></i>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="post-meta">
+                                        <span><i class="fas fa-calendar-alt"></i> 2024-01-10</span>
+                                        <span><i class="fas fa-eye"></i> 2,034</span>
+                                        <span><i class="fas fa-heart"></i> 156</span>
+                                    </div>
+                                    <h3 class="card-title">JavaScript ES6+ 새로운 기능들</h3>
+                                    <p class="card-text">ES6부터 추가된 유용한 JavaScript 기능들을 실전 예제와 함께 정리해보겠습니다.</p>
+                                    <div class="badges">
+                                        <span class="badge badge-primary">JavaScript</span>
+                                        <span class="badge badge-secondary">ES6</span>
+                                        <span class="badge badge-accent">프로그래밍</span>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="author-info">
+                                            <div class="author-avatar">
+                                                <i class="fas fa-user-circle"></i>
+                                            </div>
+                                            <span class="author-name">관리자</span>
+                                        </div>
+                                        <a href="#" class="btn btn-text">
+                                            읽어보기 <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <article class="blog-card">
+                                <div class="card-image">
+                                    <div class="card-image-placeholder" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                        <i class="fab fa-react"></i>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="post-meta">
+                                        <span><i class="fas fa-calendar-alt"></i> 2024-01-08</span>
+                                        <span><i class="fas fa-eye"></i> 763</span>
+                                        <span><i class="fas fa-heart"></i> 52</span>
+                                    </div>
+                                    <h3 class="card-title">React Hooks 완벽 가이드</h3>
+                                    <p class="card-text">React Hooks의 모든 기능과 사용법을 실전 예제로 자세히 알아보겠습니다.</p>
+                                    <div class="badges">
+                                        <span class="badge badge-primary">React</span>
+                                        <span class="badge badge-secondary">Hooks</span>
+                                        <span class="badge badge-accent">프론트엔드</span>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="author-info">
+                                            <div class="author-avatar">
+                                                <i class="fas fa-user-circle"></i>
+                                            </div>
+                                            <span class="author-name">관리자</span>
+                                        </div>
+                                        <a href="#" class="btn btn-text">
+                                            읽어보기 <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    
+                    <!-- 더 보기 버튼 -->
+                    <div class="text-center load-more-section">
+                        <button class="btn btn-outline-primary btn-large">
+                            <i class="fas fa-arrows-rotate"></i> 더 많은 포스트 보기
+                        </button>
+                        <p class="load-more-text">127개의 포스트 중 4개를 보고 있습니다</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 사이드바 -->
+            <div class="col-lg-4">
+                <div class="sidebar">
+                    <!-- 프로필 카드 -->
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h4>관리자</h4>
+                            <p class="profile-role">개발자 & 블로거</p>
+                        </div>
+                        <p class="profile-bio">개발과 일상을 기록하며 성장하는 개발자입니다.</p>
+                        <div class="profile-social">
+                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- 검색 -->
+                    <div class="sidebar-section">
+                        <h5><i class="fas fa-magnifying-glass"></i> 검색</h5>
+                        <div class="search-box">
+                            <input type="text" class="form-control" placeholder="포스트를 검색하세요...">
+                            <button class="search-btn" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 카테고리 -->
+                    <div class="sidebar-section">
+                        <h5><i class="fas fa-folder-open"></i> 카테고리</h5>
+                        <ul class="category-list">
+                            <li>
+                                <a href="#">
+                                    <span class="category-name"><i class="fas fa-code"></i> 개발</span>
+                                    <span class="category-count">52</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="category-name"><i class="fas fa-heart"></i> 일상</span>
+                                    <span class="category-count">38</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="category-name"><i class="fas fa-plane"></i> 여행</span>
+                                    <span class="category-count">21</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="category-name"><i class="fas fa-star"></i> 리뷰</span>
+                                    <span class="category-count">16</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 인기 태그 -->
+                    <div class="sidebar-section">
+                        <h5><i class="fas fa-hashtag"></i> 인기 태그</h5>
+                        <div class="tag-cloud">
+                            <a href="#" class="tag">Spring Boot</a>
+                            <a href="#" class="tag">JavaScript</a>
+                            <a href="#" class="tag">React</a>
+                            <a href="#" class="tag">여행</a>
+                            <a href="#" class="tag">맛집</a>
+                            <a href="#" class="tag">독서</a>
+                            <a href="#" class="tag">Java</a>
+                            <a href="#" class="tag">프로그래밍</a>
+                            <a href="#" class="tag">Python</a>
+                            <a href="#" class="tag">DevOps</a>
+                        </div>
+                    </div>
+
+                    <!-- 최근 댓글 -->
+                    <div class="sidebar-section">
+                        <h5><i class="fas fa-message"></i> 최근 댓글</h5>
+                        <div class="recent-comments">
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="comment-content">
+                                    <p class="comment-author">김철수</p>
+                                    <p class="comment-text">정말 유용한 정보네요! 많은 도움이...</p>
+                                </div>
+                            </div>
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="comment-content">
+                                    <p class="comment-author">이영희</p>
+                                    <p class="comment-text">다음 포스트도 기대하겠습니다!</p>
+                                </div>
+                            </div>
+                            <div class="comment-item">
+                                <div class="comment-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="comment-content">
+                                    <p class="comment-author">박민수</p>
+                                    <p class="comment-text">감사합니다. 덕분에 많이 배웠어요.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- 플로팅 액션 버튼 -->
+    <div class="floating-actions">
+        <button class="floating-btn main-btn" title="새 포스트 작성">
+            <i class="fas fa-pen"></i>
+        </button>
+        <button class="floating-btn scroll-top-btn" title="맨 위로" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <!-- 푸터 -->
+    <footer>
+        <div class="footer-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="footer-brand">
+                            <h3><i class="fas fa-blog"></i> BLOG</h3>
+                            <p>개발과 일상에 대한 이야기를 공유하는 공간입니다. 함께 성장하는 커뮤니티를 만들어갑니다.</p>
+                        </div>
+                        <div class="footer-social">
+                            <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="footer-title">빠른 링크</h5>
+                        <ul class="footer-links">
+                            <li><a href="#home"><i class="fas fa-chevron-right"></i> 홈</a></li>
+                            <li><a href="#posts"><i class="fas fa-chevron-right"></i> 포스트</a></li>
+                            <li><a href="#about"><i class="fas fa-chevron-right"></i> 소개</a></li>
+                            <li><a href="#contact"><i class="fas fa-chevron-right"></i> 연락처</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2">
+                        <h5 class="footer-title">카테고리</h5>
+                        <ul class="footer-links">
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> 개발</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> 일상</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> 여행</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> 리뷰</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="footer-title">연락처</h5>
+                        <ul class="footer-contact">
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span>email@example.com</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-location-dot"></i>
+                                <span>서울, 대한민국</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2025 내 블로그. All rights reserved.</p>
+                    <div class="footer-bottom-links">
+                        <a href="#">개인정보처리방침</a>
+                        <span>·</span>
+                        <a href="#">이용약관</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
