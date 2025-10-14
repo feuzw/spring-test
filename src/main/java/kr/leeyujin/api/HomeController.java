@@ -1,11 +1,12 @@
-package kr.leeyujin.api.controller;
+package kr.leeyujin.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
 @Controller
 public class HomeController {
-
+    
     @GetMapping("/")
     public String index() {
         return "index";
@@ -23,24 +24,23 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home() {
-        return "home";
+        return "calculator/home";
     }
 
     @GetMapping("/calculator/plus")
     public String plus(){
-        return "contents/calculator/plus";
+        return "calculator/plus";
     }
     @GetMapping("/calculator/minus")
     public String minus(){
-        return "contents/calculator/minus";
+        return "calculator/minus";
     }
     @GetMapping("/calculator/multiple")
     public String multiple(){
-        return "contents/calculator/multiple";
+        return "calculator/multiple";
     }
     @GetMapping("/calculator/divide")
     public String divide(){
-        return "contents/calculator/divide";
+        return "calculator/divide";
     }
-    
 }
