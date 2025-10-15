@@ -1,14 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>뺄셈</title>
+    <link rel="stylesheet" href="/styles/calculator/calculator.css">
 </head>
 <body>
-    <h1>빼기</h1>
-    <a href="/home" class="back-link">
-        ← 홈으로 돌아가기
-    </a>
+    <div class="container">
+        <h1>뺄셈</h1>
+        
+        <form action="/minus" method="GET" class="calculator-form">
+            <div class="input-group">
+                <label for="num1">첫 번째 수</label>
+                <input type="number" id="num1" name="num1" required>
+            </div>
+            
+            <div class="operator">-</div>
+            
+            <div class="input-group">
+                <label for="num2">두 번째 수</label>
+                <input type="number" id="num2" name="num2" required>
+            </div>
+            
+            <button type="submit" class="calculate-btn">계산하기</button>
+        </form>
+        
+        <a href="/" class="back-link">← 홈으로 돌아가기</a>
+    </div>
 </body>
 </html>
