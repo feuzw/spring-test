@@ -15,7 +15,7 @@ body {
 }
 
 .container {
-    max-width: 500px;
+    max-width: 600px;
     width: 100%;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px) saturate(180%);
@@ -46,7 +46,7 @@ h1 {
     font-weight: 700;
 }
 
-.calculator-form {
+.rrn-form {
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -64,7 +64,7 @@ label {
     font-size: 14px;
 }
 
-input[type="number"] {
+input[type="text"] {
     padding: 14px 16px;
     border: 2px solid #e5e7eb;
     border-radius: 12px;
@@ -74,48 +74,34 @@ input[type="number"] {
     transition: all 0.3s ease;
 }
 
-input[type="number"]:focus {
+input[type="text"]:focus {
     outline: none;
     border-color: #667eea;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-select {
-    padding: 14px 16px;
-    border: 2px solid #e5e7eb;
-    border-radius: 12px;
-    font-size: 16px;
-    background: white;
-    color: #1f2937;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 16px center;
-    padding-right: 40px;
+.rrn-input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-select:focus {
-    outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-select:hover {
-    border-color: #667eea;
-}
-
-.operator {
+.rrn-input-group input {
+    flex: 1;
     text-align: center;
-    font-size: 32px;
-    font-weight: 800;
-    color: #1a202c;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
-.calculate-btn {
+.separator {
+    font-size: 24px;
+    font-weight: 600;
+    color: #667eea;
+}
+
+.submit-btn {
     padding: 14px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -129,12 +115,12 @@ select:hover {
     box-shadow: 0 4px 14px rgba(102, 126, 234, 0.4);
 }
 
-.calculate-btn:hover {
+.submit-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
 
-.calculate-btn:active {
+.submit-btn:active {
     transform: translateY(0);
 }
 
@@ -154,12 +140,46 @@ select:hover {
 }
 
 /* 반응형 디자인 */
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+        padding: 30px 20px;
+    }
+
+    .rrn-input-group {
+        gap: 6px;
+    }
+
+    .rrn-input-group input {
+        font-size: 14px;
+        padding: 12px 8px;
+    }
+
+    .separator {
+        font-size: 20px;
+    }
+}
+
 @media (max-width: 480px) {
     .container {
-        padding: 30px 24px;
+        max-width: 95%;
+        padding: 20px 15px;
+    }
+
+    .rrn-input-group {
+        gap: 4px;
+    }
+
+    .rrn-input-group input {
+        font-size: 13px;
+        padding: 10px 6px;
+    }
+
+    .separator {
+        font-size: 18px;
     }
 
     h1 {
-        font-size: 28px;
+        font-size: 24px;
     }
 }
