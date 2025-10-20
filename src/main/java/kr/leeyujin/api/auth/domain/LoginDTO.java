@@ -4,6 +4,7 @@ public class LoginDTO {
     
     private String username;
     private String password;
+
     
     // Getter 메소드
     public String getUsername() {

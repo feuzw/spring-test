@@ -13,12 +13,12 @@ public class CalculatorController {
 
     private final CalculatorService calculatorService;
 
-    public CalculatorController(CalculatorService calculatorService){
+    public CalculatorController(CalculatorService calculatorService) {
         this.calculatorService = calculatorService;
     }
-    
+
     @GetMapping("/move/calculator")
-    public String calculator(@RequestParam int num1, @RequestParam int num2, @RequestParam String operator){
+    public String calculator(@RequestParam int num1, @RequestParam int num2, @RequestParam String operator) {
 
         CalculatorDTO calculatorDTO = new CalculatorDTO();
         calculatorDTO.setNum1(num1);
@@ -26,7 +26,7 @@ public class CalculatorController {
         calculatorDTO.setOperator(operator);
 
         calculatorService.calculator(calculatorDTO);
-        
+
         return "calculator/calculator";
     }
 }

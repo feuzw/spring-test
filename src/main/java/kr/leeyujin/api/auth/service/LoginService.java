@@ -13,7 +13,7 @@ public class LoginService {
         System.out.println("로그인 서비스로 들어옴: ");
         System.out.println("서비스로 전달된 아이디: " + loginDTO.getUsername());
         System.out.println("서비스로 전달된 비밀번호: " + loginDTO.getPassword());
-        
+
         LoginVO loginVO = new LoginVO();
 
         System.out.println("VO에서 서비스로 전달된 아이디: " + loginVO.getUsername());
@@ -21,18 +21,16 @@ public class LoginService {
 
         int code = 0;
         String message = "";
-        
-        if(loginVO.getUsername().equals(loginDTO.getUsername())
-        && loginVO.getPassword().equals(loginDTO.getPassword())){
+
+        if (loginVO.getUsername().equals(loginDTO.getUsername())
+                && loginVO.getPassword().equals(loginDTO.getPassword())) {
             code = 0;
             message = "로그인 성공";
-        }
-        else if(loginVO.getUsername().equals(loginDTO.getUsername())
-        && !loginVO.getPassword().equals(loginDTO.getPassword())){
+        } else if (loginVO.getUsername().equals(loginDTO.getUsername())
+                && !loginVO.getPassword().equals(loginDTO.getPassword())) {
             code = 2;
             message = "비밀번호 불일치";
-        }
-        else{
+        } else {
             code = 1;
             message = "아이디 불일치";
         }
@@ -44,6 +42,5 @@ public class LoginService {
         return messenger;
 
     }
-
 
 }
