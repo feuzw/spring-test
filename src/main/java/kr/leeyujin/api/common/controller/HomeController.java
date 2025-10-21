@@ -16,10 +16,10 @@ public class HomeController {
         return "auth/login";
     }
 
-    @GetMapping("/auth/register")
-    public String register() {
-        return "auth/register";
-    }
+    // @GetMapping("/auth/register")
+    // public String register() {
+    //     return "auth/register";
+    // }
 
     @GetMapping("/calculator")
     public String calculator() {
