@@ -9,6 +9,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import kr.leeyujin.api.common.domain.Messenger;
@@ -22,7 +23,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/auth/register")
-    public Messenger registerUsers() {
+    public String registerUsers(Model model) {
         System.out.println("===== CSV 파일 읽기 시작 =====");
 
         String csvFilePath = "src/main/resources/static/csv/train.csv";
@@ -30,8 +31,9 @@ public class UserController {
         // 승객 데이터를 저장할 리스트
         List<UserDTO> users = new ArrayList<>();
 
-        try (Reader reader = new FileReader(csvFilePath);
-                CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader())) {
+        try {
+            Reader reader = new FileReader(csvFilePath);
+            CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader());
 
             int count = 0;
             for (CSVRecord record : csvParser) {
@@ -57,16 +59,20 @@ public class UserController {
                 users.add(user);
                 count++;
             }
+            reader.close();
+            csvParser.close();
 
             // 서비스로 데이터 전달 -> 레포지토리에서 터미널 출력
             Messenger messenger = userService.registerUsers(users);
-            return messenger;
+            model.addAttribute("messenger", messenger);
+            model.addAttribute("users", users);
+            return "user/list";
 
         } catch (Exception e) {
             Messenger messenger = new Messenger();
             messenger.setCode(500);
             messenger.setMessage("CSV파일을 읽는 중 오류가 발생했습니다.");
-            return messenger;
+            return "user/list";
         }
     }
 
