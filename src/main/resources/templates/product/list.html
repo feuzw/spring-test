@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 목록 - 내 블로그</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="/styles/index.css" rel="stylesheet">
+    <link href="/styles/product/list.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- 네비게이션 바 -->
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-blog"></i> BLOG
+            </a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/calculator">계산기</a>
+                <a class="nav-link" href="/user/list">유저</a>
+                <a class="nav-link" href="/weather/list">날씨</a>
+                <a class="nav-link active" href="/product/home">상품</a>
+                <a class="btn btn-outline-secondary" href="/auth/login">
+                    <i class="fas fa-sign-in-alt"></i> 로그인
+                </a>
+                <a class="btn btn-primary" href="/auth/register">
+                    <i class="fas fa-user-plus"></i> 회원가입
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 페이지 헤더 -->
+            <div class="page-header">
+                <div class="page-header-content">
+                    <h1 class="page-title">
+                        <i class="fas fa-box"></i>
+                        상품 목록
+                    </h1>
+                    <p class="page-description">
+                        등록된 모든 상품을 확인하고 관리하세요
+                    </p>
+                </div>
+                <div class="page-actions">
+                    <a href="/product/home" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i>
+                        뒤로가기
+                    </a>
+                    <a href="/products/save" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        상품 등록
+                    </a>
+                </div>
+            </div>
+
+            <!-- 필터 및 검색 -->
+            <div class="filter-section">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="상품명으로 검색...">
+                </div>
+                <div class="filter-controls">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">전체 카테고리</option>
+                        <option value="electronics">전자제품</option>
+                        <option value="clothing">의류</option>
+                        <option value="books">도서</option>
+                        <option value="home">홈&리빙</option>
+                        <option value="sports">스포츠</option>
+                    </select>
+                    <select id="sortFilter" class="filter-select">
+                        <option value="name">이름순</option>
+                        <option value="price-asc">가격 낮은순</option>
+                        <option value="price-desc">가격 높은순</option>
+                        <option value="stock">재고순</option>
+                    </select>
+                    <button class="btn btn-outline" onclick="resetFilters()">
+                        <i class="fas fa-undo"></i>
+                        초기화
+                    </button>
+                </div>
+            </div>
+
+            <!-- 메신저 메시지 -->
+            <div th:if="${messenger != null}" class="messenger-container">
+                <div th:class="${messenger.code == 200 ? 'messenger success' : 'messenger error'}">
+                    <i th:class="${messenger.code == 200 ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'}"></i>
+                    <span th:text="${messenger.message}">메시지</span>
+                </div>
+            </div>
+
+
+            <!-- 상품 목록 -->
+            <div class="products-container">
+                <div class="products-header">
+                    <h3>상품 목록</h3>
+                    <div class="view-controls">
+                        <button class="view-btn active" onclick="switchView('grid')" data-view="grid">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="view-btn" onclick="switchView('list')" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 그리드 뷰 -->
+                <div id="grid-view" class="products-grid">
+                    <div th:if="${products == null or products.isEmpty()}" class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <h3>등록된 상품이 없습니다</h3>
+                        <p>새로운 상품을 등록해보세요</p>
+                        <a href="/products/save" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            상품 등록하기
+                        </a>
+                    </div>
+
+                    <div th:each="product : ${products}" class="product-card" th:data-category="${product.category}"
+                        th:data-name="${product.name}">
+                        <div class="product-image">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="product-info">
+                            <h4 th:text="${product.name}">상품명</h4>
+                            <p class="product-brand" th:text="${product.brand}">브랜드</p>
+                            <p class="product-category" th:text="${product.category}">카테고리</p>
+                            <p class="product-description" th:text="${product.description}">상품 설명</p>
+                            <div class="product-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">가격:</span>
+                                    <span class="detail-value"
+                                        th:text="${product.price + ' ' + product.currency}">0원</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">재고:</span>
+                                    <span th:text="${product.stock + '개'}">재고</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">색상:</span>
+                                    <span class="detail-value" th:text="${product.color}">색상</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">크기:</span>
+                                    <span class="detail-value" th:text="${product.size}">크기</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">EAN:</span>
+                                    <span class="detail-value" th:text="${product.ean}">EAN</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">가용성:</span>
+                                    <span class="detail-value" th:text="${product.availability}">가용성</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="action-btn edit-btn" onclick="editProduct('${product.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete-btn" onclick="deleteProduct('${product.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 리스트 뷰 -->
+                <div id="list-view" class="products-list" style="display: none;">
+                    <div class="list-header">
+                        <div class="list-col">상품명</div>
+                        <div class="list-col">브랜드</div>
+                        <div class="list-col">카테고리</div>
+                        <div class="list-col">가격</div>
+                        <div class="list-col">재고</div>
+                        <div class="list-col">색상</div>
+                        <div class="list-col">크기</div>
+                        <div class="list-col">상태</div>
+                        <div class="list-col">액션</div>
+                    </div>
+
+                    <div th:if="${products == null or products.isEmpty()}" class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <h3>등록된 상품이 없습니다</h3>
+                        <p>새로운 상품을 등록해보세요</p>
+                        <a href="/products/save" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            상품 등록하기
+                        </a>
+                    </div>
+
+                    <div th:each="product : ${products}" class="list-item" th:data-category="${product.category}"
+                        th:data-name="${product.name}">
+                        <div class="list-col">
+                            <div class="product-name">
+                                <i class="fas fa-box"></i>
+                                <span th:text="${product.name}">상품명</span>
+                            </div>
+                        </div>
+                        <div class="list-col">
+                            <span class="brand-badge" th:text="${product.brand}">브랜드</span>
+                        </div>
+                        <div class="list-col">
+                            <span class="category-badge" th:text="${product.category}">카테고리</span>
+                        </div>
+                        <div class="list-col">
+                            <span class="price" th:text="${product.price + ' ' + product.currency}">0원</span>
+                        </div>
+                        <div class="list-col">
+                            <span th:text="${product.stock + '개'}">0개</span>
+                        </div>
+                        <div class="list-col">
+                            <span class="color-badge" th:text="${product.color}">색상</span>
+                        </div>
+                        <div class="list-col">
+                            <span class="size-badge" th:text="${product.size}">크기</span>
+                        </div>
+                        <div class="list-col">
+                            <span th:text="${product.stock + '개'}">상태</span>
+                        </div>
+                        <div class="list-col">
+                            <div class="action-buttons">
+                                <button class="action-btn edit-btn" onclick="editProduct('${product.id}')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete-btn" onclick="deleteProduct('${product.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 페이지네이션 -->
+            <div class="pagination-container">
+                <div class="pagination">
+                    <button class="page-btn" onclick="changePage(-1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span class="page-info">1 / 1</span>
+                    <button class="page-btn" onclick="changePage(1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>BLOG</h4>
+                    <p>개발과 일상에 대한 이야기를 공유합니다.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>빠른 링크</h4>
+                    <ul>
+                        <li><a href="/calculator">계산기</a></li>
+                        <li><a href="/user/list">유저</a></li>
+                        <li><a href="/weather/list">날씨</a></li>
+                        <li><a href="/product/home">상품</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>연락처</h4>
+                    <p>이메일: contact@example.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 내 블로그. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 뷰 전환
+        function switchView(viewType) {
+            const gridView = document.getElementById('grid-view');
+            const listView = document.getElementById('list-view');
+            const viewBtns = document.querySelectorAll('.view-btn');
+
+            viewBtns.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-view="${viewType}"]`).classList.add('active');
+
+            if (viewType === 'grid') {
+                gridView.style.display = 'grid';
+                listView.style.display = 'none';
+            } else {
+                gridView.style.display = 'none';
+                listView.style.display = 'block';
+            }
+        }
+
+        // 필터 초기화
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('categoryFilter').value = '';
+            document.getElementById('sortFilter').value = 'name';
+            filterProducts();
+        }
+
+        // 상품 필터링
+        function filterProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
+
+            const products = document.querySelectorAll('.product-card, .list-item');
+
+            products.forEach(product => {
+                const name = product.getAttribute('data-name').toLowerCase();
+                const category = product.getAttribute('data-category');
+
+                const matchesSearch = name.includes(searchTerm);
+                const matchesCategory = !categoryFilter || category === categoryFilter;
+
+                if (matchesSearch && matchesCategory) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        // 상품 편집
+        function editProduct(productId) {
+            window.location.href = `/product/update?id=${productId}`;
+        }
+
+        // 상품 삭제
+        function deleteProduct(productId) {
+            if (confirm('정말로 이 상품을 삭제하시겠습니까?')) {
+                // 실제 삭제 로직 구현
+                console.log('상품 삭제:', productId);
+            }
+        }
+
+        // 페이지 변경
+        function changePage(direction) {
+            // 페이지네이션 로직 구현
+            console.log('페이지 변경:', direction);
+        }
+
+
+        // 이벤트 리스너
+        document.getElementById('searchInput').addEventListener('input', filterProducts);
+        document.getElementById('categoryFilter').addEventListener('change', filterProducts);
+        document.getElementById('sortFilter').addEventListener('change', filterProducts);
+    </script>
+
+</body>
+
+</html>

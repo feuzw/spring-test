@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유저 목록 - 내 블로그</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="/styles/index.css" rel="stylesheet">
+    <link href="/styles/user/list.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- 네비게이션 바 -->
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-blog"></i> BLOG
+            </a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/calculator">계산기</a>
+                <a class="nav-link active" href="/user/list">유저</a>
+                <a class="nav-link" href="/weather/list">날씨</a>
+                <a class="nav-link" href="/product/list">상품</a>
+                <a class="btn btn-outline-secondary" href="/auth/login">
+                    <i class="fas fa-sign-in-alt"></i> 로그인
+                </a>
+                <a class="btn btn-primary" href="/auth/register">
+                    <i class="fas fa-user-plus"></i> 회원가입
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 페이지 헤더 -->
+            <div class="page-header">
+                <div class="page-header-content">
+                    <h1 class="page-title">
+                        <i class="fas fa-users"></i>
+                        유저 목록
+                    </h1>
+                    <p class="page-description">
+                        등록된 유저들의 정보를 확인하세요
+                    </p>
+                </div>
+                <div class="page-actions">
+                    <form action="/users/all" method="POST" class="upload-form">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-upload"></i>
+                            파일업로드
+                        </button>
+                    </form>
+                    <a href="/auth/register" class="btn btn-secondary">
+                        <i class="fas fa-user-plus"></i>
+                        새 유저 등록
+                    </a>
+                </div>
+            </div>
+
+            <!-- 유저 데이터 테이블 -->
+            <div class="user-table-container">
+                <div class="table-header">
+                    <h3>유저 데이터</h3>
+                    <div class="table-actions">
+                        <span class="user-count">총 <span th:text="${users != null ? users.size() : 0}">0</span>명</span>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>생존여부</th>
+                                <th>등급</th>
+                                <th>이름</th>
+                                <th>성별</th>
+                                <th>나이</th>
+                                <th>형제자매</th>
+                                <th>부모자녀</th>
+                                <th>티켓번호</th>
+                                <th>요금</th>
+                                <th>객실</th>
+                                <th>탑승항구</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${users == null or users.isEmpty()}">
+                                <td colspan="12" class="empty-message">
+                                    <i class="fas fa-user-slash"></i>
+                                    등록된 유저가 없습니다.
+                                </td>
+                            </tr>
+                            <tr th:each="user : ${users}">
+                                <td th:text="${user.userId}">-</td>
+                                <td>
+                                    <span th:if="${user.survived == '1'}" class="survived">생존</span>
+                                    <span th:if="${user.survived == '0'}" class="not-survived">사망</span>
+                                    <span th:if="${user.survived != '1' and user.survived != '0'}"
+                                        th:text="${user.survived}">-</span>
+                                </td>
+                                <td>
+                                    <span th:if="${user.pclass == '1'}" class="class-1">1등급</span>
+                                    <span th:if="${user.pclass == '2'}" class="class-2">2등급</span>
+                                    <span th:if="${user.pclass == '3'}" class="class-3">3등급</span>
+                                    <span th:if="${user.pclass != '1' and user.pclass != '2' and user.pclass != '3'}"
+                                        th:text="${user.pclass}">-</span>
+                                </td>
+                                <td th:text="${user.name}">-</td>
+                                <td>
+                                    <span th:if="${user.gender == 'male'}" class="gender-male">
+                                        <i class="fas fa-mars"></i> 남성
+                                    </span>
+                                    <span th:if="${user.gender == 'female'}" class="gender-female">
+                                        <i class="fas fa-venus"></i> 여성
+                                    </span>
+                                    <span th:if="${user.gender != 'male' and user.gender != 'female'}"
+                                        th:text="${user.gender}">-</span>
+                                </td>
+                                <td th:text="${user.age}">-</td>
+                                <td th:text="${user.sibSp}">-</td>
+                                <td th:text="${user.parch}">-</td>
+                                <td th:text="${user.ticket}">-</td>
+                                <td th:text="${user.fare}">-</td>
+                                <td th:text="${user.cabin}">-</td>
+                                <td>
+                                    <span th:if="${user.embarked == 'S'}" class="embarked-s">Southampton</span>
+                                    <span th:if="${user.embarked == 'C'}" class="embarked-c">Cherbourg</span>
+                                    <span th:if="${user.embarked == 'Q'}" class="embarked-q">Queenstown</span>
+                                    <span
+                                        th:if="${user.embarked != 'S' and user.embarked != 'C' and user.embarked != 'Q'}"
+                                        th:text="${user.embarked}">-</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>BLOG</h4>
+                    <p>개발과 일상에 대한 이야기를 공유합니다.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>빠른 링크</h4>
+                    <ul>
+                        <li><a href="/calculator">계산기</a></li>
+                        <li><a href="/user/list">유저</a></li>
+                        <li><a href="/weather">날씨</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>연락처</h4>
+                    <p>이메일: contact@example.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 내 블로그. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

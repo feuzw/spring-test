@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>날씨 정보 - 내 블로그</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="/styles/index.css" rel="stylesheet">
+    <link href="/styles/weather/list.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- 네비게이션 바 -->
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-blog"></i> BLOG
+            </a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/calculator">계산기</a>
+                <a class="nav-link" href="/user/list">유저</a>
+                <a class="nav-link active" href="/weather/list">날씨</a>
+                <a class="nav-link" href="/product/list">상품</a>
+                <a class="btn btn-outline-secondary" href="/auth/login">
+                    <i class="fas fa-sign-in-alt"></i> 로그인
+                </a>
+                <a class="btn btn-primary" href="/auth/register">
+                    <i class="fas fa-user-plus"></i> 회원가입
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 페이지 헤더 -->
+            <div class="page-header">
+                <div class="page-header-content">
+                    <h1 class="page-title">
+                        <i class="fas fa-cloud-sun"></i>
+                        날씨 정보
+                    </h1>
+                    <p class="page-description">
+                        최근 날씨 데이터를 확인하세요
+                    </p>
+                </div>
+                <div class="page-actions">
+                    <form action="/weathers/all" method="POST" class="upload-form">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-upload"></i>
+                            파일업로드
+                        </button>
+                    </form>
+                    <a href="/weather" class="btn btn-secondary">
+                        <i class="fas fa-sync-alt"></i>
+                        데이터 새로고침
+                    </a>
+                </div>
+            </div>
+
+            <!-- 날씨 데이터 테이블 -->
+            <div class="weather-table-container">
+                <div class="table-header">
+                    <h3>날씨 데이터</h3>
+                    <div class="table-actions">
+                        <span class="weather-count">총 <span
+                                th:text="${weathers != null ? weathers.size() : 0}">0</span>일</span>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="weather-table">
+                        <thead>
+                            <tr>
+                                <th>일시</th>
+                                <th>평균기온</th>
+                                <th>최고기온</th>
+                                <th>최고기온시각</th>
+                                <th>최저기온</th>
+                                <th>최저기온시각</th>
+                                <th>일교차</th>
+                                <th>강수량</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${weathers == null or weathers.isEmpty()}">
+                                <td colspan="8" class="empty-message">
+                                    <i class="fas fa-cloud-rain"></i>
+                                    날씨 데이터가 없습니다.
+                                </td>
+                            </tr>
+                            <tr th:each="weather : ${weathers}">
+                                <td th:text="${weather.date}">-</td>
+                                <td>
+                                    <span
+                                        th:if="${weather.averageTemperature != null and weather.averageTemperature != ''}"
+                                        th:text="${weather.averageTemperature + '℃'}" class="temp-average">-</span>
+                                    <span
+                                        th:if="${weather.averageTemperature == null or weather.averageTemperature == ''}">-</span>
+                                </td>
+                                <td>
+                                    <span th:if="${weather.maxTemperature != null and weather.maxTemperature != ''}"
+                                        th:text="${weather.maxTemperature + '℃'}" class="temp-max">-</span>
+                                    <span
+                                        th:if="${weather.maxTemperature == null or weather.maxTemperature == ''}">-</span>
+                                </td>
+                                <td th:text="${weather.maxTemperatureTime}">-</td>
+                                <td>
+                                    <span th:if="${weather.minTemperature != null and weather.minTemperature != ''}"
+                                        th:text="${weather.minTemperature + '℃'}" class="temp-min">-</span>
+                                    <span
+                                        th:if="${weather.minTemperature == null or weather.minTemperature == ''}">-</span>
+                                </td>
+                                <td th:text="${weather.minTemperatureTime}">-</td>
+                                <td>
+                                    <span th:if="${weather.temperatireRange != null and weather.temperatireRange != ''}"
+                                        th:text="${weather.temperatireRange + '℃'}" class="temp-range">-</span>
+                                    <span
+                                        th:if="${weather.temperatireRange == null or weather.temperatireRange == ''}">-</span>
+                                </td>
+                                <td>
+                                    <span th:if="${weather.precipitation != null and weather.precipitation != ''}"
+                                        th:text="${weather.precipitation + 'mm'}" class="precipitation">-</span>
+                                    <span
+                                        th:if="${weather.precipitation == null or weather.precipitation == ''}">-</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 날씨 요약 정보 -->
+            <div th:if="${weathers != null and !weathers.isEmpty()}" class="weather-summary">
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <div class="card-icon">
+                            <i class="fas fa-thermometer-half"></i>
+                        </div>
+                        <div class="card-content">
+                            <h4>평균 기온</h4>
+                            <p th:text="${#aggregates.avg(weathers.![averageTemperature])} + '℃'">-</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-icon">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="card-content">
+                            <h4>최고 기온</h4>
+                            <p th:text="${#aggregates.max(weathers.![maxTemperature])} + '℃'">-</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-icon">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="card-content">
+                            <h4>최저 기온</h4>
+                            <p th:text="${#aggregates.min(weathers.![minTemperature])} + '℃'">-</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-icon">
+                            <i class="fas fa-cloud-rain"></i>
+                        </div>
+                        <div class="card-content">
+                            <h4>총 강수량</h4>
+                            <p th:text="${#aggregates.sum(weathers.![precipitation])} + 'mm'">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>BLOG</h4>
+                    <p>개발과 일상에 대한 이야기를 공유합니다.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>빠른 링크</h4>
+                    <ul>
+                        <li><a href="/calculator">계산기</a></li>
+                        <li><a href="/user/list">유저</a></li>
+                        <li><a href="/weather">날씨</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>연락처</h4>
+                    <p>이메일: contact@example.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 내 블로그. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

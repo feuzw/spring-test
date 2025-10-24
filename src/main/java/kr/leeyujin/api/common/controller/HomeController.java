@@ -30,5 +30,17 @@ public class HomeController {
     public String rrn() {
         return "rrn/rrn";
     }
+    @GetMapping("/user/list")
+    public String userList() {
+        return "user/list";
+    }
+    @GetMapping("/weather/list")
+    public String weatherList() {
+        return "weather/list";
+    }
+    @GetMapping("/product/list")
+    public String productList() {
+        return "product/list";
+    }
 
 }

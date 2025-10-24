@@ -9,14 +9,11 @@ import kr.leeyujin.api.weather.domain.WeatherDTO;
 import kr.leeyujin.api.weather.repository.WeatherRepository;
 import lombok.RequiredArgsConstructor;
 
-@Service
-@RequiredArgsConstructor
-public class WeatherService {
-    private final WeatherRepository weatherRepository;
-
-    public Messenger getWeather(List<WeatherDTO> weathers) {
-        Messenger messenger = weatherRepository.saveWeather(weathers);
-        
-        return messenger;
-    }
+public interface WeatherService {
+    Messenger save(WeatherDTO weather);
+    Messenger saveAll(List<WeatherDTO> weathers);
+    Messenger update(WeatherDTO weather);
+    Messenger delete(String id);
+    Messenger findById(String id);
+    Messenger findAll();
 }
